@@ -185,6 +185,7 @@ export default function LeetCodeTracker() {
   const [timerMode, setTimerMode] = useState(15); // 15 or 30
   const [showTip, setShowTip] = useState(null);
   const [loaded, setLoaded] = useState(false);
+  const [page, setPage] = useState("tracker"); // "tracker" or "strategy"
   const intervalRef = useRef(null);
 
   // Load state from storage
@@ -323,6 +324,35 @@ export default function LeetCodeTracker() {
           font-size: 11px; transition: all 0.2s;
         }
         .reset-btn:hover { border-color: #ff4444; color: #ff4444; }
+        .nav-tab {
+          padding: 8px 16px; border: none; border-bottom: 2px solid transparent;
+          background: none; color: #555; cursor: pointer; font-family: inherit;
+          font-size: 13px; font-weight: 500; transition: all 0.2s; letter-spacing: 0.5px;
+        }
+        .nav-tab:hover { color: #aaa; }
+        .nav-tab.active { color: #00ff88; border-bottom-color: #00ff88; }
+        .strategy-section {
+          padding: 24px; border: 1px solid #1a1a2a; border-radius: 10px;
+          background: #0f0f18; margin-bottom: 16px; animation: slideIn 0.3s ease;
+        }
+        .strategy-section h3 {
+          font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600;
+          color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 10px;
+        }
+        .strategy-section p {
+          font-size: 13px; color: #aaa; line-height: 1.7; margin-bottom: 8px;
+        }
+        .strategy-number {
+          width: 28px; height: 28px; border-radius: 6px; display: inline-flex;
+          align-items: center; justify-content: center; font-size: 13px; font-weight: 700;
+          background: rgba(0,255,136,0.1); color: #00ff88; border: 1px solid rgba(0,255,136,0.2);
+          flex-shrink: 0;
+        }
+        .strategy-callout {
+          margin-top: 16px; padding: 14px 18px; background: rgba(119,136,255,0.06);
+          border: 1px solid rgba(119,136,255,0.15); border-radius: 8px;
+          font-size: 12px; color: #99aaff; line-height: 1.6;
+        }
       `}</style>
 
       {/* HEADER */}
@@ -355,8 +385,102 @@ export default function LeetCodeTracker() {
         </div>
       </div>
 
+      {/* NAV TABS */}
+      <div style={{ padding: "0 24px", borderBottom: "1px solid #1a1a2a", display: "flex", gap: 4 }}>
+        <button className={`nav-tab ${page === "tracker" ? "active" : ""}`} onClick={() => setPage("tracker")}>
+          Tracker
+        </button>
+        <button className={`nav-tab ${page === "strategy" ? "active" : ""}`} onClick={() => setPage("strategy")}>
+          Strategy
+        </button>
+      </div>
+
+      {page === "strategy" && (
+        <div style={{ padding: "24px", maxWidth: 720, margin: "0 auto" }}>
+          {/* Hero */}
+          <div style={{ marginBottom: 28 }}>
+            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 20, fontWeight: 700, color: "#fff", marginBottom: 8 }}>
+              Speed Strategy
+            </div>
+            <p style={{ fontSize: 13, color: "#888", lineHeight: 1.7, margin: 0 }}>
+              The core issue is pattern recognition speed, not understanding. At ~15 min per problem, you need to identify the pattern within 2-3 minutes and code almost on autopilot.
+            </p>
+          </div>
+
+          {/* Section 1 */}
+          <div className="strategy-section">
+            <h3><span className="strategy-number">1</span> Study by pattern, not by problem</h3>
+            <p>
+              Group problems into the ~12-15 core patterns (sliding window, two pointers, BFS/DFS, topological sort, monotonic stack, union find, interval merge, binary search on answer, etc.). Do 3-5 problems per pattern in a batch.
+            </p>
+            <p>
+              You want your brain to shortcut from "I see X constraint" to "this is pattern Y" instantly.
+            </p>
+          </div>
+
+          {/* Section 2 */}
+          <div className="strategy-section">
+            <h3><span className="strategy-number">2</span> The "solve, review, redo" loop</h3>
+            <p>
+              For each problem: give yourself 15 minutes. If you don't have a working approach by minute 5, look at the solution category (not the full solution — just the tag). If you're stuck at 15, read the editorial, then close it and reimplement from memory.
+            </p>
+            <p>
+              Come back 2-3 days later and redo it cold. The spaced repetition is what builds the speed.
+            </p>
+            <div className="strategy-callout">
+              5 min — no approach? Check the pattern tag.<br/>
+              15 min — still stuck? Read editorial, close it, reimplement.<br/>
+              2-3 days later — redo cold.
+            </div>
+          </div>
+
+          {/* Section 3 */}
+          <div className="strategy-section">
+            <h3><span className="strategy-number">3</span> Simulate real conditions weekly</h3>
+            <p>
+              Pick 2 random mediums on a timer. No IDE autocomplete, no running code until you think it's done. This trains you to write correct code on the first pass, which is where most of the time savings come from.
+            </p>
+          </div>
+
+          {/* Section 4 */}
+          <div className="strategy-section">
+            <h3><span className="strategy-number">4</span> Optimize your "template library" mentally</h3>
+            <p>
+              Have instant-recall templates for: binary search (both boundary variants), BFS/DFS traversal, sliding window expand/contract, backtracking skeleton, DP table setup (1D and 2D).
+            </p>
+            <p>
+              You shouldn't be thinking about boilerplate — it should be muscle memory.
+            </p>
+            <div className="strategy-callout">
+              Templates to memorize: binary search boundaries, BFS/DFS traversal, sliding window expand/contract, backtracking choose/explore/unchoose, DP table init (1D + 2D).
+            </div>
+          </div>
+
+          {/* Section 5 */}
+          <div className="strategy-section">
+            <h3><span className="strategy-number">5</span> Neetcode 150 over Blind 75</h3>
+            <p>
+              Neetcode 150 is better organized by pattern and has video walkthroughs. If you're time-constrained, prioritize the patterns you're weakest on rather than grinding linearly.
+            </p>
+          </div>
+
+          {/* Key insight */}
+          <div style={{
+            marginTop: 8, padding: "20px 24px", background: "rgba(0,255,136,0.04)",
+            border: "1px solid rgba(0,255,136,0.15)", borderRadius: 10,
+          }}>
+            <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 14, fontWeight: 600, color: "#00ff88", marginBottom: 8 }}>
+              The biggest leverage point
+            </div>
+            <p style={{ fontSize: 13, color: "#aaa", lineHeight: 1.7, margin: 0 }}>
+              Going from "I can solve mediums" to "I can solve them in 15 minutes" is almost always about the first 3 minutes — how fast you map the problem to a known pattern and pick your data structures. If you're spending 5+ minutes just figuring out the approach, that's the bottleneck to focus on.
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* DAY SELECTOR */}
-      <div style={{ padding: "14px 24px", borderBottom: "1px solid #1a1a2a", overflowX: "auto" }}>
+      {page === "tracker" && <div style={{ padding: "14px 24px", borderBottom: "1px solid #1a1a2a", overflowX: "auto" }}>
         <div style={{ display: "flex", gap: 6, minWidth: "max-content" }}>
           {STUDY_PLAN.map((day) => {
             const dc = day.problems.filter((_, i) => completed[`${day.day}-${i}`]).length;
@@ -378,8 +502,9 @@ export default function LeetCodeTracker() {
             );
           })}
         </div>
-      </div>
+      </div>}
 
+      {page === "tracker" && <>
       {/* TIMER */}
       <div style={{ padding: "16px 24px", borderBottom: "1px solid #1a1a2a", background: "#0c0c14" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
@@ -548,6 +673,7 @@ export default function LeetCodeTracker() {
           </div>
         </div>
       )}
+      </>}
     </div>
   );
 }
