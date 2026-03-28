@@ -5,7 +5,7 @@ const STUDY_PLAN = [
     day: 1,
     pattern: "Two Pointers",
     icon: "👉👈",
-    template: "left=0, right=len-1, move based on condition",
+    template: "one input opposite ends: l=0, r=len-1. Two inputs: exhaust both",
     problems: [
       { name: "Two Sum II", id: 167, difficulty: "Med", url: "https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/", tip: "Sorted array → two pointers, not hashmap" },
       { name: "3Sum", id: 15, difficulty: "Med", url: "https://leetcode.com/problems/3sum/", tip: "Fix one, two-pointer the rest. Skip dupes." },
@@ -17,7 +17,7 @@ const STUDY_PLAN = [
     day: 2,
     pattern: "Sliding Window",
     icon: "🪟",
-    template: "expand right, shrink left when condition breaks",
+    template: "expand right, shrink left when constraint breaks",
     problems: [
       { name: "Longest Substring Without Repeating", id: 3, difficulty: "Med", url: "https://leetcode.com/problems/longest-substring-without-repeating-characters/", tip: "Set + shrink left on collision" },
       { name: "Min Size Subarray Sum", id: 209, difficulty: "Med", url: "https://leetcode.com/problems/minimum-size-subarray-sum/", tip: "Shrink window when sum >= target" },
@@ -27,21 +27,45 @@ const STUDY_PLAN = [
   },
   {
     day: 3,
-    pattern: "Binary Search",
-    icon: "🔍",
-    template: "lo=0, hi=n-1, while lo<=hi, mid=(lo+hi)//2",
+    pattern: "Prefix Sum + Hashing",
+    icon: "🧩",
+    template: "prefix[i] = prefix[i-1] + nums[i]. Subarrays: hashmap of prefix counts",
     problems: [
-      { name: "Search in Rotated Sorted Array", id: 33, difficulty: "Med", url: "https://leetcode.com/problems/search-in-rotated-sorted-array/", tip: "Determine which half is sorted first" },
-      { name: "Find Min in Rotated Sorted Array", id: 153, difficulty: "Med", url: "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/", tip: "Compare mid to right boundary" },
-      { name: "Koko Eating Bananas", id: 875, difficulty: "Med", url: "https://leetcode.com/problems/koko-eating-bananas/", tip: "Binary search on the answer (speed)" },
-      { name: "Search a 2D Matrix", id: 74, difficulty: "Med", url: "https://leetcode.com/problems/search-a-2d-matrix/", tip: "Treat as flat sorted array" },
+      { name: "Range Sum Query - Immutable", id: 303, difficulty: "Easy", url: "https://leetcode.com/problems/range-sum-query-immutable/", tip: "Warm-up — build prefix[], query = prefix[r+1] - prefix[l]" },
+      { name: "Subarray Sum Equals K", id: 560, difficulty: "Med", url: "https://leetcode.com/problems/subarray-sum-equals-k/", tip: "HashMap of prefix sum counts. curr - k seen before?" },
+      { name: "Product of Array Except Self", id: 238, difficulty: "Med", url: "https://leetcode.com/problems/product-of-array-except-self/", tip: "Left prefix product × right prefix product" },
+      { name: "Contiguous Array", id: 525, difficulty: "Med", url: "https://leetcode.com/problems/contiguous-array/", tip: "Treat 0 as -1, prefix sum + hashmap for first occurrence" },
     ],
   },
   {
     day: 4,
-    pattern: "Stacks",
+    pattern: "Binary Search",
+    icon: "🔍",
+    template: "lo=0, hi=n-1. Greedy: check(mid) → binary search on the answer",
+    problems: [
+      { name: "Search in Rotated Sorted Array", id: 33, difficulty: "Med", url: "https://leetcode.com/problems/search-in-rotated-sorted-array/", tip: "Determine which half is sorted first" },
+      { name: "Find Min in Rotated Sorted Array", id: 153, difficulty: "Med", url: "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/", tip: "Compare mid to right boundary" },
+      { name: "Koko Eating Bananas", id: 875, difficulty: "Med", url: "https://leetcode.com/problems/koko-eating-bananas/", tip: "Greedy binary search on the answer (speed)" },
+      { name: "Search a 2D Matrix", id: 74, difficulty: "Med", url: "https://leetcode.com/problems/search-a-2d-matrix/", tip: "Treat as flat sorted array" },
+    ],
+  },
+  {
+    day: 5,
+    pattern: "Linked Lists",
+    icon: "🔗",
+    template: "fast/slow pointer, dummy head trick, reverse by rewiring next",
+    problems: [
+      { name: "Reverse Linked List", id: 206, difficulty: "Easy", url: "https://leetcode.com/problems/reverse-linked-list/", tip: "prev=null, curr=head, rewire curr.next=prev, advance" },
+      { name: "Linked List Cycle", id: 141, difficulty: "Easy", url: "https://leetcode.com/problems/linked-list-cycle/", tip: "Fast/slow pointer — if they meet, there's a cycle" },
+      { name: "Reorder List", id: 143, difficulty: "Med", url: "https://leetcode.com/problems/reorder-list/", tip: "Find mid (slow/fast), reverse second half, merge" },
+      { name: "LRU Cache", id: 146, difficulty: "Med", url: "https://leetcode.com/problems/lru-cache/", tip: "HashMap + doubly linked list" },
+    ],
+  },
+  {
+    day: 6,
+    pattern: "Stacks (Monotonic)",
     icon: "📚",
-    template: "monotonic stack: pop while top violates invariant",
+    template: "monotonic stack: pop while top violates invariant, push current",
     problems: [
       { name: "Valid Parentheses", id: 20, difficulty: "Easy", url: "https://leetcode.com/problems/valid-parentheses/", tip: "Warm-up — push open, match close" },
       { name: "Daily Temperatures", id: 739, difficulty: "Med", url: "https://leetcode.com/problems/daily-temperatures/", tip: "Monotonic decreasing stack of indices" },
@@ -50,32 +74,8 @@ const STUDY_PLAN = [
     ],
   },
   {
-    day: 5,
-    pattern: "Heap / Priority Queue",
-    icon: "⛰️",
-    template: "heapq: push/pop O(log n), peek O(1)",
-    problems: [
-      { name: "Kth Largest Element", id: 215, difficulty: "Med", url: "https://leetcode.com/problems/kth-largest-element-in-an-array/", tip: "Min-heap of size k, or quickselect" },
-      { name: "Top K Frequent Elements", id: 347, difficulty: "Med", url: "https://leetcode.com/problems/top-k-frequent-elements/", tip: "Counter + heap, or bucket sort" },
-      { name: "Task Scheduler", id: 621, difficulty: "Med", url: "https://leetcode.com/problems/task-scheduler/", tip: "Max heap + cooldown queue" },
-      { name: "K Closest Points to Origin", id: 973, difficulty: "Med", url: "https://leetcode.com/problems/k-closest-points-to-origin/", tip: "Max-heap of size k by distance" },
-    ],
-  },
-  {
-    day: 6,
-    pattern: "Trees (DFS)",
-    icon: "🌳",
-    template: "recursive: base case → process → recurse left/right",
-    problems: [
-      { name: "Lowest Common Ancestor of BST", id: 235, difficulty: "Med", url: "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/", tip: "Split point where p and q diverge" },
-      { name: "Binary Tree Level Order Traversal", id: 102, difficulty: "Med", url: "https://leetcode.com/problems/binary-tree-level-order-traversal/", tip: "BFS with queue, process level by level" },
-      { name: "Validate BST", id: 98, difficulty: "Med", url: "https://leetcode.com/problems/validate-binary-search-tree/", tip: "Pass min/max bounds down recursively" },
-      { name: "Kth Smallest in BST", id: 230, difficulty: "Med", url: "https://leetcode.com/problems/kth-smallest-element-in-a-bst/", tip: "In-order traversal, count to k" },
-    ],
-  },
-  {
     day: 7,
-    pattern: "🔄 Review + Timed Sim",
+    pattern: "Review + Timed Sim",
     icon: "⏱️",
     template: "SIMULATION DAY — 2 random mediums, 30 min total",
     problems: [
@@ -86,9 +86,21 @@ const STUDY_PLAN = [
   },
   {
     day: 8,
+    pattern: "Trees (DFS + BFS)",
+    icon: "🌳",
+    template: "DFS: recursive or stack. BFS: queue, process level by level",
+    problems: [
+      { name: "Lowest Common Ancestor of BST", id: 235, difficulty: "Med", url: "https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/", tip: "Split point where p and q diverge" },
+      { name: "Binary Tree Level Order Traversal", id: 102, difficulty: "Med", url: "https://leetcode.com/problems/binary-tree-level-order-traversal/", tip: "BFS with queue, process level by level" },
+      { name: "Validate BST", id: 98, difficulty: "Med", url: "https://leetcode.com/problems/validate-binary-search-tree/", tip: "Pass min/max bounds down recursively" },
+      { name: "Kth Smallest in BST", id: 230, difficulty: "Med", url: "https://leetcode.com/problems/kth-smallest-element-in-a-bst/", tip: "In-order traversal, count to k" },
+    ],
+  },
+  {
+    day: 9,
     pattern: "Graphs (BFS/DFS)",
     icon: "🕸️",
-    template: "build adj list, visited set, BFS=queue DFS=stack/recursion",
+    template: "adj list + visited set. BFS=queue, DFS=stack/recursion",
     problems: [
       { name: "Number of Islands", id: 200, difficulty: "Med", url: "https://leetcode.com/problems/number-of-islands/", tip: "DFS flood fill from each unvisited '1'" },
       { name: "Clone Graph", id: 133, difficulty: "Med", url: "https://leetcode.com/problems/clone-graph/", tip: "HashMap old→new + BFS or DFS" },
@@ -97,68 +109,56 @@ const STUDY_PLAN = [
     ],
   },
   {
-    day: 9,
-    pattern: "Graphs (Advanced)",
+    day: 10,
+    pattern: "Graphs (Topo Sort + Dijkstra)",
     icon: "🗺️",
-    template: "topo sort: in-degree + BFS, or DFS post-order",
+    template: "topo: in-degree + BFS. Dijkstra: min-heap + dist[], relax edges",
     problems: [
       { name: "Course Schedule II", id: 210, difficulty: "Med", url: "https://leetcode.com/problems/course-schedule-ii/", tip: "Kahn's algo — BFS with in-degree" },
       { name: "Rotting Oranges", id: 994, difficulty: "Med", url: "https://leetcode.com/problems/rotting-oranges/", tip: "Multi-source BFS — enqueue all rotten first" },
-      { name: "Surrounded Regions", id: 130, difficulty: "Med", url: "https://leetcode.com/problems/surrounded-regions/", tip: "DFS from border O's, then flip the rest" },
+      { name: "Network Delay Time", id: 743, difficulty: "Med", url: "https://leetcode.com/problems/network-delay-time/", tip: "Dijkstra — min-heap of (dist, node), relax neighbors" },
       { name: "Graph Valid Tree", id: 261, difficulty: "Med", url: "https://leetcode.com/problems/graph-valid-tree/", tip: "n-1 edges + connected = tree (Union Find)" },
     ],
   },
   {
-    day: 10,
-    pattern: "Backtracking",
-    icon: "🔙",
-    template: "choose → explore → unchoose. Base case = valid solution",
-    problems: [
-      { name: "Subsets", id: 78, difficulty: "Med", url: "https://leetcode.com/problems/subsets/", tip: "Include/exclude at each index" },
-      { name: "Combination Sum", id: 39, difficulty: "Med", url: "https://leetcode.com/problems/combination-sum/", tip: "Reuse allowed — don't increment start" },
-      { name: "Permutations", id: 46, difficulty: "Med", url: "https://leetcode.com/problems/permutations/", tip: "Swap-based or used[] boolean array" },
-      { name: "Word Search", id: 79, difficulty: "Med", url: "https://leetcode.com/problems/word-search/", tip: "DFS grid + mark visited, backtrack" },
-    ],
-  },
-  {
     day: 11,
-    pattern: "DP (1D)",
-    icon: "📈",
-    template: "dp[i] = f(dp[i-1], dp[i-2], ...)",
+    pattern: "Heap + Intervals",
+    icon: "⛰️",
+    template: "top k: min-heap of size k. Intervals: sort by start, merge overlapping",
     problems: [
-      { name: "Climbing Stairs", id: 70, difficulty: "Easy", url: "https://leetcode.com/problems/climbing-stairs/", tip: "Warm-up — dp[i] = dp[i-1] + dp[i-2]" },
-      { name: "House Robber", id: 198, difficulty: "Med", url: "https://leetcode.com/problems/house-robber/", tip: "dp[i] = max(dp[i-1], dp[i-2]+nums[i])" },
-      { name: "Coin Change", id: 322, difficulty: "Med", url: "https://leetcode.com/problems/coin-change/", tip: "dp[amount] = min coins. Bottom-up." },
-      { name: "Longest Increasing Subsequence", id: 300, difficulty: "Med", url: "https://leetcode.com/problems/longest-increasing-subsequence/", tip: "O(n²) DP or O(n log n) with binary search" },
+      { name: "Kth Largest Element", id: 215, difficulty: "Med", url: "https://leetcode.com/problems/kth-largest-element-in-an-array/", tip: "Min-heap of size k, or quickselect" },
+      { name: "Top K Frequent Elements", id: 347, difficulty: "Med", url: "https://leetcode.com/problems/top-k-frequent-elements/", tip: "Counter + heap, or bucket sort" },
+      { name: "Merge Intervals", id: 56, difficulty: "Med", url: "https://leetcode.com/problems/merge-intervals/", tip: "Sort by start, extend end if overlapping" },
+      { name: "Insert Interval", id: 57, difficulty: "Med", url: "https://leetcode.com/problems/insert-interval/", tip: "Before, overlap, after — three phases" },
     ],
   },
   {
     day: 12,
-    pattern: "DP (2D / Intervals)",
-    icon: "🧮",
-    template: "dp[i][j] = subproblem on range or two sequences",
+    pattern: "Backtracking + Trie",
+    icon: "🔙",
+    template: "choose → explore → unchoose. Trie: nested children map, isEnd flag",
     problems: [
-      { name: "Unique Paths", id: 62, difficulty: "Med", url: "https://leetcode.com/problems/unique-paths/", tip: "dp[i][j] = dp[i-1][j] + dp[i][j-1]" },
-      { name: "Longest Common Subsequence", id: 1143, difficulty: "Med", url: "https://leetcode.com/problems/longest-common-subsequence/", tip: "Match → diagonal+1, else max(left, up)" },
-      { name: "Word Break", id: 139, difficulty: "Med", url: "https://leetcode.com/problems/word-break/", tip: "dp[i] = can we segment s[:i]?" },
-      { name: "Decode Ways", id: 91, difficulty: "Med", url: "https://leetcode.com/problems/decode-ways/", tip: "1-digit always valid if >0, 2-digit if 10-26" },
+      { name: "Subsets", id: 78, difficulty: "Med", url: "https://leetcode.com/problems/subsets/", tip: "Include/exclude at each index" },
+      { name: "Combination Sum", id: 39, difficulty: "Med", url: "https://leetcode.com/problems/combination-sum/", tip: "Reuse allowed — don't increment start" },
+      { name: "Implement Trie", id: 208, difficulty: "Med", url: "https://leetcode.com/problems/implement-trie-prefix-tree/", tip: "children = {}, walk char by char, mark isEnd" },
+      { name: "Word Search", id: 79, difficulty: "Med", url: "https://leetcode.com/problems/word-search/", tip: "DFS grid + mark visited, backtrack" },
     ],
   },
   {
     day: 13,
-    pattern: "Intervals + Linked Lists",
-    icon: "🔗",
-    template: "sort by start, merge overlapping. LL: dummy head trick.",
+    pattern: "Dynamic Programming",
+    icon: "📈",
+    template: "1D: dp[i] = f(dp[i-1],...). 2D: dp[i][j] on two sequences. Top-down → bottom-up",
     problems: [
-      { name: "Merge Intervals", id: 56, difficulty: "Med", url: "https://leetcode.com/problems/merge-intervals/", tip: "Sort by start, extend end if overlapping" },
-      { name: "Insert Interval", id: 57, difficulty: "Med", url: "https://leetcode.com/problems/insert-interval/", tip: "Before, overlap, after — three phases" },
-      { name: "Reorder List", id: 143, difficulty: "Med", url: "https://leetcode.com/problems/reorder-list/", tip: "Find mid, reverse second half, merge" },
-      { name: "LRU Cache", id: 146, difficulty: "Med", url: "https://leetcode.com/problems/lru-cache/", tip: "HashMap + doubly linked list" },
+      { name: "Climbing Stairs", id: 70, difficulty: "Easy", url: "https://leetcode.com/problems/climbing-stairs/", tip: "Warm-up — dp[i] = dp[i-1] + dp[i-2]" },
+      { name: "House Robber", id: 198, difficulty: "Med", url: "https://leetcode.com/problems/house-robber/", tip: "dp[i] = max(dp[i-1], dp[i-2]+nums[i])" },
+      { name: "Coin Change", id: 322, difficulty: "Med", url: "https://leetcode.com/problems/coin-change/", tip: "dp[amount] = min coins. Bottom-up." },
+      { name: "Longest Common Subsequence", id: 1143, difficulty: "Med", url: "https://leetcode.com/problems/longest-common-subsequence/", tip: "2D: match → diagonal+1, else max(left, up)" },
     ],
   },
   {
     day: 14,
-    pattern: "🏁 Final Simulation",
+    pattern: "Final Simulation",
     icon: "🎯",
     template: "FINAL DAY — full simulation + review",
     problems: [
@@ -362,7 +362,7 @@ export default function LeetCodeTracker() {
             <div style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: 22, fontWeight: 700, color: "#fff", letterSpacing: "-0.5px" }}>
               <span style={{ color: "#00ff88" }}>leet</span>grind
             </div>
-            <div style={{ fontSize: 11, color: "#555", marginTop: 2 }}>14-DAY SPEED PROTOCOL • 2 MEDIUMS / 30 MIN</div>
+            <div style={{ fontSize: 11, color: "#555", marginTop: 2 }}>14-DAY SPEED PROTOCOL • LICC-ALIGNED • 2 MEDIUMS / 30 MIN</div>
           </div>
           <button className="reset-btn" onClick={() => { if (confirm("Reset all progress?")) setCompleted({}); }}>
             reset
